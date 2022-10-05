@@ -1,6 +1,5 @@
 locals {
   name = var.override_name == null ? "${var.system_name}-${lower(var.environment)}-apimapi" : var.override_name
-  # location = var.override_location == null ? var.resource_group.location : var.override_location
 
   api_management_api = concat(azurerm_api_management_api.api_management_api.*, [null])[0]
 }
@@ -8,27 +7,26 @@ locals {
 resource "azurerm_api_management_api" "api_management_api" {
   count = var.enabled ? 1 : 0
 
-  name = local.name
-  # location            = local.location
-  resource_group_name = var.resource_group.name
-
+  name                = local.name
   api_management_name = var.api_management_name
+  resource_group_name = var.resource_group.name
   revision            = var.revision
-  api_type            = var.api_type
-  display_name        = var.display_name
-  path                = var.path
-  protocols           = var.protocols
-  description         = var.description
+
+  api_type     = try(var.api_type, null)
+  display_name = try(var.display_name, null)
+  path         = try(var.path, null)
+  protocols    = try(var.protocols, null)
+  description  = try(var.description, null)
 
   dynamic "import" {
-    for_each = try(var.settings.import, null) != null ? [var.settings.import] : []
+    for_each = try(var.configuration.import, null) != null ? [var.configuration.import] : []
 
     content {
 
       content_format = try(import.value.content_format, null)
       content_value  = try(import.value.content_value, null)
       dynamic "wsdl_selector" {
-        for_each = try(var.settings.wsdl_selector, null) != null ? [var.settings.wsdl_selector] : []
+        for_each = try(var.configuration.wsdl_selector, null) != null ? [var.configuration.wsdl_selector] : []
 
         content {
 
@@ -40,7 +38,7 @@ resource "azurerm_api_management_api" "api_management_api" {
   }
 
   dynamic "oauth2_authorization" {
-    for_each = try(var.settings.oauth2_authorization, null) != null ? [var.settings.oauth2_authorization] : []
+    for_each = try(var.configuration.oauth2_authorization, null) != null ? [var.configuration.oauth2_authorization] : []
 
     content {
 
@@ -50,7 +48,7 @@ resource "azurerm_api_management_api" "api_management_api" {
   }
 
   dynamic "openid_authentication" {
-    for_each = try(var.settings.openid_authentication, null) != null ? [var.settings.openid_authentication] : []
+    for_each = try(var.configuration.openid_authentication, null) != null ? [var.configuration.openid_authentication] : []
 
     content {
 
@@ -59,13 +57,13 @@ resource "azurerm_api_management_api" "api_management_api" {
     }
   }
 
-  service_url = var.service_url
+  service_url = try(var.service_url, null)
 
   # The `soap_pass_through` variable will be removed in favour of the `api_type` property in version 4.0 of the AzureRM provider.
   # soap_pass_through     = var.soap_pass_through
 
   dynamic "subscription_key_parameter_names" {
-    for_each = try(var.settings.subscription_key_parameter_names, null) != null ? [var.settings.subscription_key_parameter_names] : []
+    for_each = try(var.configuration.subscription_key_parameter_names, null) != null ? [var.configuration.subscription_key_parameter_names] : []
 
     content {
 
@@ -74,10 +72,10 @@ resource "azurerm_api_management_api" "api_management_api" {
     }
   }
 
-  subscription_required = var.subscription_required
-  version               = var.api_version
-  version_set_id        = var.version_set_id
-  revision_description  = var.revision_description
-  version_description   = var.version_description
-  source_api_id         = var.source_api_id
+  subscription_required = try(var.subscription_required, null)
+  version               = try(var.api_version, null)
+  version_set_id        = try(var.version_set_id, null)
+  revision_description  = try(var.revision_description, null)
+  version_description   = try(var.version_description, null)
+  source_api_id         = try(var.source_api_id, null)
 }
