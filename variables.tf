@@ -105,6 +105,11 @@ variable "description" {
   default     = null
 }
 
+variable "configuration" {
+  description = "(Required) The configuration for block paramenters."
+  type        = any
+}
+
 # variable "import" {}
 # variable "oauth2_authorization" {}
 # variable "openid_authentication" {}
