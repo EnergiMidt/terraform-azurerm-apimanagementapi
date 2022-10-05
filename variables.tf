@@ -102,7 +102,7 @@ variable "description" {
 }
 
 variable "configuration" {
-  description = "(Required) The configuration for block paramenters."
+  description = "(Required) The configuration for block arguments."
   type        = any
 }
 
