@@ -93,10 +93,6 @@ variable "protocols" {
   description = "(Optional) A list of protocols the operations in this API can be invoked. Possible values are `http`, `https`, `ws`, and `wss`."
   type        = list(string)
   default     = null
-  validation {
-    condition     = can(regex("^(http|https|ws|wss)$", var.protocols))
-    error_message = "Possible values are `http`, `https`, `ws`, and `wss`."
-  }
 }
 
 variable "description" {
