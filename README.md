@@ -52,7 +52,7 @@ No modules.
 | <a name="input_api_management_name"></a> [api\_management\_name](#input\_api\_management\_name) | (Required) The Name of the API Management Service where this API should be created. Changing this forces a new resource to be created. | `string` | n/a | yes |
 | <a name="input_api_type"></a> [api\_type](#input\_api\_type) | (Optional) Type of API. Possible values are `graphql`, `http`, `soap`, and `websocket`. Defaults to `http`. | `string` | `"http"` | no |
 | <a name="input_api_version"></a> [api\_version](#input\_api\_version) | (Optional) The Version number of this API, if this API is versioned. | `string` | `null` | no |
-| <a name="input_configuration"></a> [configuration](#input\_configuration) | (Required) The configuration for block arguments. | `any` | n/a | yes |
+| <a name="input_configuration"></a> [configuration](#input\_configuration) | (Required) The configuration for block type arguments. | `any` | n/a | yes |
 | <a name="input_description"></a> [description](#input\_description) | (Optional) A description of the API Management API, which may include HTML formatting tags. | `string` | `null` | no |
 | <a name="input_display_name"></a> [display\_name](#input\_display\_name) | (Optional) The display name of the API. | `string` | `null` | no |
 | <a name="input_enabled"></a> [enabled](#input\_enabled) | (Optional) Enable the creation of this resource. | `bool` | `true` | no |
